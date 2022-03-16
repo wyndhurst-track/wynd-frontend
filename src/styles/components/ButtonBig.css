@@ -1,0 +1,39 @@
+/* .button-big {
+    background-color: #8BDCFF;
+    height: 50px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px;
+}
+
+.button-big-text {
+    font-family: 'Raleway', sans-serif;
+    padding: 10px;
+    color: #3B3B3B;
+} */
+
+.button-big {
+    color: #FFF9F3;
+    margin: 30px;
+    font-size: 2.5rem;
+    transition: 0.5s;
+    cursor: pointer;
+    transform: scale(0.97);
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.button-big:hover {
+    color: #8BDCFF;
+    transform: scale(1);
+}
+

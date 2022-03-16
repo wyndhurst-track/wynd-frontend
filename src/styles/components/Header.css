@@ -1,0 +1,15 @@
+.header {
+    width: 100%;
+    height: 100px;
+    background-color: #3B3B3B;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    opacity: 0.95;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.header:hover {
+    opacity: 1;
+}

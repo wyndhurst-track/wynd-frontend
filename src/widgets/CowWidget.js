@@ -1,11 +1,11 @@
-import './styles/widgets/CowWidget.css'
+import React from "react";
+import '../styles/widgets/CowWidget.css'
 
-function CowWidget() {
-    return
-        (
-            <div>
+export default class CowWidget extends React.Component {
+    render() {
+        return (
+            <div className="cow-widget">
             </div>
-        )
+        );
+    }
 }
-
-export default CowWidget;

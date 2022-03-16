@@ -1,0 +1,32 @@
+.row-text {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    transition: 0.5s;
+}
+
+.cow-selector-row-widget {
+    width: 80%;
+    background-color: #d3f2ff;
+    border-radius: 0.3em;
+    padding: 0.25rem 1rem;
+    border: 1px solid #8BDCFF;
+    margin: 0.2rem;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    transition: color 0.1s linear, background-color 0.5s, border 0.5s;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+.cow-selector-row-widget:hover{
+    background-color: white;
+    border: 1px solid #888;
+}
