@@ -29,6 +29,7 @@ export default class SelectWidget extends React.Component {
                 cows.push(cow)
             }
         }
+        // var sortedCows = cows.sort()
         this.setState({searchedCows: cows})
     }
 

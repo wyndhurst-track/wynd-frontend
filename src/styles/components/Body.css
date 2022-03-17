@@ -1,11 +1,16 @@
 .content-body {
-    height: calc(100vh - 120px);
-    width: calc(100% - 20px);
+    height: calc(100vh - 140px);
+    width: calc(100% - 40px);
     margin: 10px auto;
     background-color: #3B3B3B;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    display: grid; 
+    grid-template-columns: minmax(250px, 18%) 1fr; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 10px; 
+    padding: 10px;
+    grid-template-areas: 
+    "select cow"
+    "stats cow"; 
     border-radius: 10px;
     opacity: 0.7;
     transition: 0.5s;

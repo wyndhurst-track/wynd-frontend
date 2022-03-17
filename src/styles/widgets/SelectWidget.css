@@ -1,8 +1,7 @@
 .select-widget {
+    grid-area: select;
     background-color: #FFF9F3;
-    height: calc(100% - 20px);
-    width: 400px;
-    margin: 10px;
+    width: 100%;
     border-radius: 5px 5px;
     opacity: 0.85;
     transition: 0.5s;
@@ -10,7 +9,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    flex-flow: column wrap;
+    flex-flow: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.select-widget::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .select-widget:hover {
@@ -20,7 +26,7 @@
 
 .cow-list-widget {
     width: 90%;
-    min-height: 100px;
+    min-height: 110px;
     max-height: 500px;
     background-color: #3B3B3B;
     padding: 4px;
@@ -29,19 +35,28 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    flex-flow: column wrap;
+    flex-flow: column;
 }
 
 .current-cows {
     background-color: #3B3B3B;
-    min-height: 30px;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     width: 90%;
     padding: 4px;
     margin: 5px 0px;
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
     flex-flow: row wrap;
     border-radius: 5px 5px;
+}
+
+.current-cows::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .available-cows {
