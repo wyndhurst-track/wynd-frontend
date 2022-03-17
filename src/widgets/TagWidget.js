@@ -13,7 +13,7 @@ export default class TagWidget extends React.Component {
 
     render() {
         return (
-            <span className={this.style} id={this.props.id}>
+            <span className={this.style} key={this.props.passedKey} onClick={this.props.onClick}>
                 <p className="tag-text">{this.props.name}</p>
             </span>
         );
