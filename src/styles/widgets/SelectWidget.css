@@ -1,17 +1,20 @@
 .select-widget {
     grid-area: select;
     background-color: #FFF9F3;
-    width: 100%;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
     border-radius: 5px 5px;
     opacity: 0.85;
     transition: 0.5s;
     transform: scale(0.997);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-flow: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr minmax(50%, max-content(90%)); 
+    gap: 5px; 
+    padding: 5px;
+    grid-template-areas: 
+    "selected"
+    "search"; 
 }
 
 .select-widget::-webkit-scrollbar {
@@ -25,33 +28,35 @@
 }
 
 .cow-list-widget {
-    width: 90%;
-    min-height: 110px;
-    max-height: 500px;
     background-color: #3B3B3B;
     padding: 4px;
-    margin: 5px 0px;
     border-radius: 5px 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-flow: column;
+    grid-area: search;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.cow-list-widget::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .current-cows {
     background-color: #3B3B3B;
-    height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
-    width: 90%;
     padding: 4px;
-    margin: 5px 0px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
     flex-flow: row wrap;
     border-radius: 5px 5px;
+    grid-area: selected;
 }
 
 .current-cows::-webkit-scrollbar {
