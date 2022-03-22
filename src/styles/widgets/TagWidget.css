@@ -1,19 +1,12 @@
-.tag-text {
-    font-size: 1rem;
-    padding: 0;
-    margin: 0;
-    transition: 0.5s;
-}
-
 .tag-widget {
     background-color: #d3f2ff;
     border-radius: 1em;
-    padding: 0.25rem 1rem;
+    padding: 0.2rem 0.5rem;
     border: 1px solid #8BDCFF;
     margin: 0.2rem;
     display: inline-block;
     font-family: 'Raleway', sans-serif;
-    transition: color 0.1s linear, background-color 0.5s, border 0.5s;
+    transition: color 0.25s linear, background-color 0.5s, border 0.5s;
     cursor: pointer;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -48,5 +41,88 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: none;
+}
 
+.tag-widget-all {
+    background-color: #a2ff99;
+    border: 1px solid #04ff04;
+    color: black;
+    border-radius: 1em;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    transition: 0.5s;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.tag-widget-all:hover {
+    background-color: white;
+    border: 1px solid #888;
+}
+
+.tag-widget-none {
+    background-color: #ff4747;
+    border: 1px solid #ff0404;
+    color: white;
+    border-radius: 1em;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    transition: color 0.25s linear, 
+                background-color 0.5s, 
+                border 0.5s, 
+                width 0.5s, 
+                border 0.5s,
+                margin 0.5s, 
+                padding 0.5s;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.tag-widget-none:hover {
+    color: black;
+    background-color: white;
+    border: 1px solid #888;
+}
+
+.tag-widget-disabled {
+    background-color: #d8d8d8;
+    border: 1px solid #757575;
+    color: #757575;
+    border-radius: 1em;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    transition: color 0.25s linear, 
+                background-color 0.5s, 
+                border 0.5s, 
+                width 0.5s, 
+                border 0.5s,
+                margin 0.5s, 
+                padding 0.5s;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: none;
 }

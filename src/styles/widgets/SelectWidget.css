@@ -27,6 +27,12 @@
     transform: scale(1);
 }
 
+.select-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .cow-list-widget {
     background-color: #3B3B3B;
     padding: 4px;
