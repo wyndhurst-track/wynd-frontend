@@ -31,28 +31,30 @@ export default class SelectWidget extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         fetch("http://localhost:5000/cows")
-            .then((res) => res.json())
-            .then((json) => {
-                console.log(json)
-                this.setState({
-                    availableCows: json,
-                    dataFetched: 1
-                });
-            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        dataFetched: 1,
+                        availableCows: result,
+                        searchedCows: result
+                    }, () => {
+                        var enableAll = 0, enableNone = 0;
 
-        var enableAll = 0, enableNone = 0;
+                        if (this.state.availableCows.length !== 0)
+                            enableAll = 1;
+                        if (this.state.selectedCows.length !== 0)
+                            enableNone = 1;
 
-        if (this.state.availableCows.length !== 0)
-            enableAll = 1;
-        if (this.state.selectedCows.length !== 0)
-            enableNone = 1;
-
-        this.setState = {
-            enableSelectAll: enableAll,
-            enableSelectNone: enableNone
-        }
+                        this.setState({
+                            enableSelectAll: enableAll,
+                            enableSelectNone: enableNone
+                        }, console.log(this.state.enableSelectAll))
+                    });
+                }
+            )
     }
 
     handleSearchTextChange(event) {
@@ -62,7 +64,6 @@ export default class SelectWidget extends React.Component {
     }
 
     updateSelectedCows(val) {
-        console.log(this.state.availableCows)
         var enableAll = 0, enableNone = 0;
 
         if (this.state.availableCows.length !== 0)
@@ -164,45 +165,55 @@ export default class SelectWidget extends React.Component {
     }
 
     render() {
+        var isFetched = this.state.dataFetched;
+
+        console.log(isFetched)
+
+        if (!isFetched) {
+            return(
+                <div className="select-widget">
+                    <div className="wait-container">
+                        <TagWidget name={"Please wait"}/>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className="select-widget">
-                { this.state.dataFetched && 
-                    <>
-                        <div className="current-cows" key={this.state.selectedCows.length}>
-                            {this.state.selectedCows.length === 0 && 
-                                <TagWidget name="No cows selected" passedKey={0}/>}
-                            {this.state.selectedCows.length !== 0 && 
-                                <>{this.displaySelectedCows()}</>}
-                        </div>
-                        <div className="cow-list-widget" key={this.state.searchedCows.length}>
-                            <div className="select-buttons">
-                                <TagWidget name ={"Select all"} 
-                                                    passedKey={0} 
-                                                    key={this.state.enableSelectAll} 
-                                                    enableSelectAll = {this.state.enableSelectAll}
-                                                    enableSelectNone = {this.state.enableSelectNone}
-                                                    onClick={(e) => this.handleSelectAllClick(e)}/>
-                                <TagWidget name ={"Select none"} 
-                                                    passedKey={1} 
-                                                    key={this.state.enableSelectNone} 
-                                                    enableSelectAll = {this.state.enableSelectAll}
-                                                    enableSelectNone = {this.state.enableSelectNone}
-                                                    onClick={(e) => this.handleSelectNoneClick(e)}/>
-                            </div>
-                            <input className="search-box" 
-                                    value={this.state.searchText} 
-                                    placeholder="Search..." 
-                                    onChange={event => this.handleSearchTextChange(event)}>        
-                            </input>
-                            <div className="available-cows" key={this.state.searchedCows.length}>
-                                {this.state.searchedCows.length === 0 && 
-                                    <h4 className="no-cows-text" key={this.state.searchedCows.length}>No cows available</h4>}
-                                {this.state.searchedCows.length !== 0 && 
-                                    <div key={this.state.searchedCows.length}>{this.displaySearchedCows()}</div>}
-                            </div>
-                        </div>
-                    </>
-                }
+                <div className="current-cows">
+                    {this.state.selectedCows.length === 0 && 
+                        <TagWidget name="No cows selected"/>}
+                    {this.state.selectedCows.length !== 0 && 
+                        <>{this.displaySelectedCows()}</>}
+                </div>
+                <div className="cow-list-widget" key={this.state.searchedCows.length}>
+                    <div className="select-buttons">
+                        <TagWidget name ={"Select all"} 
+                                            passedKey={this.state.enableSelectAll} 
+                                            key={this.state.enableSelectAll} 
+                                            enableSelectAll = {this.state.enableSelectAll}
+                                            enableSelectNone = {this.state.enableSelectNone}
+                                            onClick={(e) => this.handleSelectAllClick(e)}/>
+                        <TagWidget name ={"Select none"} 
+                                            passedKey={this.state.enableSelectNone} 
+                                            key={this.state.enableSelectNone} 
+                                            enableSelectAll = {this.state.enableSelectAll}
+                                            enableSelectNone = {this.state.enableSelectNone}
+                                            onClick={(e) => this.handleSelectNoneClick(e)}/>
+                    </div>
+                    <input className="search-box" 
+                            value={this.state.searchText} 
+                            placeholder="Search..." 
+                            onChange={event => this.handleSearchTextChange(event)}>        
+                    </input>
+                    <div className="available-cows" key={this.state.searchedCows.length}>
+                        {this.state.searchedCows.length === 0 && 
+                            <h4 className="no-cows-text" key={this.state.searchedCows.length}>No cows available</h4>}
+                        {this.state.searchedCows.length !== 0 && 
+                            <div key={this.state.searchedCows.length}>{this.displaySearchedCows()}</div>}
+                    </div>
+                </div>
             </div>
         );
     }

@@ -27,10 +27,16 @@
     transform: scale(1);
 }
 
+.wait-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .select-buttons {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
 }
 
 .cow-list-widget {

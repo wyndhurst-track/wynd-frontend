@@ -7,6 +7,8 @@ export default class TagWidget extends React.Component {
 
         if(this.props.name === "No cows selected")
             this.style = "tag-widget-single"
+        else if(this.props.name === "Please wait")
+            this.style = "tag-widget-disabled"
         else if (this.props.name === "Select all" && this.props.enableSelectAll === 1)
             this.style = "tag-widget-all"
         else if (this.props.name === "Select all" && this.props.enableSelectAll === 0)
