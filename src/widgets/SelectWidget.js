@@ -32,14 +32,18 @@ export default class SelectWidget extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://localhost:5000/cows")
+        fetch("http://127.0.0.1:5001/cows")
             .then(res => res.json())
             .then(
                 (result) => {
+                    var cowResult = []; 
+                    for (var i = 0; i < result.length; i++){
+                        cowResult.push(result[i][0]);
+                    }
                     this.setState({
                         dataFetched: 1,
-                        availableCows: result,
-                        searchedCows: result
+                        availableCows: [...cowResult],
+                        searchedCows: [...cowResult]
                     }, () => {
                         var enableAll = 0, enableNone = 0;
 
@@ -55,6 +59,10 @@ export default class SelectWidget extends React.Component {
                     });
                 }
             )
+    }
+
+    getRandomKey() {
+        return Math.floor(Date.now() * Math.random());
     }
 
     handleSearchTextChange(event) {
@@ -74,9 +82,7 @@ export default class SelectWidget extends React.Component {
         var cows = []
         for (var i = 0; i < this.state.availableCows.length; i++) {
             var cow = this.state.availableCows[i]
-            if(cow.includes(val)){
-                cows.push(cow)
-            }
+            cows.push(cow)
         }
         // var sortedCows = cows.sort()
         this.setState({
@@ -93,8 +99,8 @@ export default class SelectWidget extends React.Component {
             selectedCowRows.push(<TagWidget name = {this.state.selectedCows[cow]}
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
-                                            passedKey={keyInc} 
-                                            key={cow} 
+                                            passedKey={this.getRandomKey()} 
+                                            key={this.getRandomKey()} 
                                             onClick={(e) => this.handleSelectedCowClick(e)}/>)
             keyInc = keyInc + 1;
         }
@@ -103,13 +109,11 @@ export default class SelectWidget extends React.Component {
 
     displaySearchedCows() {
         var searchedCowRows = [];
-        var keyInc = 1;
         for (var cow in this.state.searchedCows) {
                 searchedCowRows.push(<CowSelectorRowWidget name ={this.state.searchedCows[cow]} 
-                                                            passedKey={keyInc} 
-                                                            key={keyInc} 
+                                                            passedKey={this.getRandomKey()} 
+                                                            key={this.getRandomKey()} 
                                                             handleSearchCowClick={(e) => this.handleSearchCowClick(e)}/>)
-                keyInc = keyInc + 1;
         }
         return searchedCowRows;
     }
@@ -166,9 +170,6 @@ export default class SelectWidget extends React.Component {
 
     render() {
         var isFetched = this.state.dataFetched;
-
-        console.log(isFetched)
-
         if (!isFetched) {
             return(
                 <div className="select-widget">
@@ -187,17 +188,17 @@ export default class SelectWidget extends React.Component {
                     {this.state.selectedCows.length !== 0 && 
                         <>{this.displaySelectedCows()}</>}
                 </div>
-                <div className="cow-list-widget" key={this.state.searchedCows.length}>
+                <div className="cow-list-widget" key={this.getRandomKey()}>
                     <div className="select-buttons">
                         <TagWidget name ={"Select all"} 
-                                            passedKey={this.state.enableSelectAll} 
-                                            key={this.state.enableSelectAll} 
+                                            passedKey={this.getRandomKey()} 
+                                            key={this.getRandomKey()} 
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
                                             onClick={(e) => this.handleSelectAllClick(e)}/>
                         <TagWidget name ={"Select none"} 
-                                            passedKey={this.state.enableSelectNone} 
-                                            key={this.state.enableSelectNone} 
+                                            passedKey={this.getRandomKey()} 
+                                            key={this.getRandomKey()} 
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
                                             onClick={(e) => this.handleSelectNoneClick(e)}/>
@@ -207,11 +208,11 @@ export default class SelectWidget extends React.Component {
                             placeholder="Search..." 
                             onChange={event => this.handleSearchTextChange(event)}>        
                     </input>
-                    <div className="available-cows" key={this.state.searchedCows.length}>
+                    <div className="available-cows" key={this.getRandomKey()}>
                         {this.state.searchedCows.length === 0 && 
-                            <h4 className="no-cows-text" key={this.state.searchedCows.length}>No cows available</h4>}
+                            <h4 className="no-cows-text" key={this.getRandomKey()}>No cows available</h4>}
                         {this.state.searchedCows.length !== 0 && 
-                            <div key={this.state.searchedCows.length}>{this.displaySearchedCows()}</div>}
+                            <div key={this.getRandomKey()}>{this.displaySearchedCows()}</div>}
                     </div>
                 </div>
             </div>
