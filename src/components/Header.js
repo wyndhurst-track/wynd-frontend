@@ -6,9 +6,8 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                <ButtonBig name="Home" />
-                <ButtonBig name="About" />
-                <ButtonBig name="GitHub" />
+                <a href="https://www.bristol.ac.uk/vet-school/" target="_blank" rel="noreferrer" className="anchor"><ButtonBig name="About" /></a>
+                <a href="https://github.com/wyndhurst-track" target="_blank" rel="noreferrer" className="anchor"><ButtonBig name="GitHub" /></a>
             </div>
         );
     }
