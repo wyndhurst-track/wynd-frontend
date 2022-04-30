@@ -55,7 +55,7 @@ export default class SelectWidget extends React.Component {
                         this.setState({
                             enableSelectAll: enableAll,
                             enableSelectNone: enableNone
-                        }, console.log(this.state.enableSelectAll))
+                        })
                     });
                 }
             )
@@ -109,6 +109,8 @@ export default class SelectWidget extends React.Component {
 
     displaySearchedCows() {
         var searchedCowRows = [];
+        var sortedCows = [...this.state.searchedCows];
+        sortedCows.sort();
         for (var cow in this.state.searchedCows) {
                 searchedCowRows.push(<CowSelectorRowWidget name ={this.state.searchedCows[cow]} 
                                                             passedKey={this.getRandomKey()} 
@@ -120,12 +122,21 @@ export default class SelectWidget extends React.Component {
 
     handleSearchCowClick(e) {
         var name = e.target.innerText;
-        var cowIndex = this.state.availableCows.indexOf(name);
+        var found = 0;
+        var cowIndex = 0;
+        for (var i = 0; !found && i < this.state.availableCows.length; i++){
+            if (String(this.state.availableCows[i]) === name) {
+                found = 1;
+                cowIndex = i;
+            }
+        }
 
-        var newSelectedCows = this.state.selectedCows;
-        var newAvailableCows = this.state.availableCows;
+        var newSelectedCows = [...this.state.selectedCows];
+        var newAvailableCows = [...this.state.availableCows];
         newSelectedCows.push(newAvailableCows[cowIndex]);
         newAvailableCows.splice(cowIndex, 1);
+        console.log(newSelectedCows)
+        console.log(newAvailableCows)
 
         this.setState({
             availableCows: newAvailableCows,
@@ -135,7 +146,14 @@ export default class SelectWidget extends React.Component {
     
     handleSelectedCowClick(e) {
         var name = e.target.innerText;
-        var cowIndex = this.state.selectedCows.indexOf(name);
+        var found = 0;
+        var cowIndex = 0;
+        for (var i = 0; !found && i < this.state.selectedCows.length; i++){
+            if (String(this.state.selectedCows[i]) === name) {
+                found = 1;
+                cowIndex = i;
+            }
+        }
 
         var newAvailableCows = this.state.availableCows;
         var newSelectedCows = this.state.selectedCows;
