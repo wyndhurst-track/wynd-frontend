@@ -17,6 +17,7 @@ export default class Body extends React.Component {
             selectedCows: [],
             selectStartDate: startDate.getTime(),
             selectEndDate: endDate.getTime(),
+            selectedDate: startDate,
             cowData: []
         }
     }
@@ -49,7 +50,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -70,7 +71,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -91,7 +92,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -102,12 +103,40 @@ export default class Body extends React.Component {
             )
     }
 
+    getSelectedCowData(cowData, date) {
+        let selectedCowData = []
+        let targetDate = new Date(date)
+        targetDate.setHours(targetDate.getHours() +1)
+        targetDate = targetDate.toString().substring(0, 25);
+        for(let i = 0; i < cowData.length; i++) {
+            let cowDate = new Date(cowData[i][4]).toString().substring(0, 25);
+            if(cowDate === targetDate)
+                selectedCowData.push(cowData[i]);
+        }
+        return selectedCowData;
+    }
+
+    updateSelectedDate(newDate) {
+        let niceDate = new Date(newDate);
+
+        this.setState({
+            selectedDate: niceDate
+        });
+    }
+
     render() {
+        let selectedCowData = this.getSelectedCowData(this.state.cowData, this.state.selectedDate);
+
         return (
             <div className="content-body">
                 <SelectWidget updateCows={(e) => this.updateCows(e)}/>
-                <StatsWidget updateStartDate={(e) => this.updateStartDate(e)} updateEndDate={(e) => this.updateEndDate(e)}/>
-                <CowWidget cowData={this.state.cowData}/>
+                <StatsWidget 
+                    cowList={this.state.cowData} 
+                    updateStartDate={(e) => this.updateStartDate(e)} 
+                    updateEndDate={(e) => this.updateEndDate(e)}
+                    updateSelectedDate={(e) => this.updateSelectedDate(e)}    
+                />
+                <CowWidget cowData={selectedCowData}/>
             </div>
         );
     }

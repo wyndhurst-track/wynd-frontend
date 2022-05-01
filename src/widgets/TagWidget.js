@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import '../styles/widgets/TagWidget.css'
 
 function getStyles(props) {
-    if(props.name === "No cows selected")
+    if(props.name === "No cows selected" || props.name === "No available data in selection" || props.date)
         return "tag-widget-single"
     else if(props.name === "Please wait")
         return "tag-widget-disabled"

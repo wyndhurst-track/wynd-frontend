@@ -32,7 +32,7 @@ export default class SelectWidget extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://127.0.0.1:5001/cows")
+        fetch("http://127.0.0.1:5000/cows")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -212,7 +212,7 @@ export default class SelectWidget extends React.Component {
             enableSelectAll: 0,
             enableSelectNone: 1,
             selectedCows: allCows
-        })
+        }, this.props.updateCows(allCows))
     }
 
     handleSelectNoneClick(e) {
@@ -225,7 +225,7 @@ export default class SelectWidget extends React.Component {
             enableSelectAll: 1,
             enableSelectNone: 0,
             searchedCows: allCows
-        }, this.updateSelectedCows(this.state.searchText))
+        }, this.props.updateCows([]))
     }
 
     render() {
