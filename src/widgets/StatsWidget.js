@@ -37,14 +37,14 @@ export default class StatsWidget extends React.Component {
         var newValue = event.target.value;
         this.setState({
             currentTick: newValue
-        })
+        }, this.props.updateSelectedDate(this.getTickDates()[newValue]))
     }
 
     loopDates() {
         var newValue = (this.state.currentTick + 1) % this.getTickDates().length;
         this.setState({
             currentTick: newValue
-        })
+        }, this.props.updateSelectedDate(this.getTickDates()[newValue]))
     }
 
     getTickDates() {
