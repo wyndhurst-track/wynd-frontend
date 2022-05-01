@@ -107,7 +107,7 @@ export default class Body extends React.Component {
             <div className="content-body">
                 <SelectWidget updateCows={(e) => this.updateCows(e)}/>
                 <StatsWidget updateStartDate={(e) => this.updateStartDate(e)} updateEndDate={(e) => this.updateEndDate(e)}/>
-                <CowWidget cowData={this.state.cowData}/>
+                <CowWidget cowData={this.state.cowData[0]}/>
             </div>
         );
     }

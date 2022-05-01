@@ -9,7 +9,6 @@ export default class CowWidget extends React.Component {
     }
 
     render() {
-        console.log(this.props.cowData)
         return (
             <div className="cow-widget">
                 {this.props.cowData && <CowVector cowData={this.props.cowData}/>}
