@@ -49,7 +49,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5002/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -70,7 +70,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5002/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -91,7 +91,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5001/data", head)
+        fetch("http://127.0.0.1:5002/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -106,7 +106,7 @@ export default class Body extends React.Component {
         return (
             <div className="content-body">
                 <SelectWidget updateCows={(e) => this.updateCows(e)}/>
-                <StatsWidget updateStartDate={(e) => this.updateStartDate(e)} updateEndDate={(e) => this.updateEndDate(e)}/>
+                <StatsWidget cowList={this.state.cowData} updateStartDate={(e) => this.updateStartDate(e)} updateEndDate={(e) => this.updateEndDate(e)}/>
                 <CowWidget cowData={this.state.cowData[0]}/>
             </div>
         );
