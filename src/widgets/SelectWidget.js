@@ -38,7 +38,7 @@ export default class SelectWidget extends React.Component {
                 (result) => {
                     var cowResult = []; 
                     for (var i = 0; i < result.length; i++){
-                        cowResult.push(result[i][0]);
+                        cowResult.push(parseInt(result[i][0]));
                     }
                     this.setState({
                         dataFetched: 1,
@@ -61,8 +61,8 @@ export default class SelectWidget extends React.Component {
             )
     }
 
-    getRandomKey() {
-        return Math.floor(Date.now() * Math.random());
+    getRandomKey(name, salt) {
+        return String(name) + String(salt);
     }
 
     handleSearchTextChange(event) {
@@ -73,16 +73,19 @@ export default class SelectWidget extends React.Component {
 
     updateSelectedCows(val) {
         var enableAll = 0, enableNone = 0;
+        var availCows = [...this.state.availableCows]
+        var selCows = [...this.state.selectedCows]
 
-        if (this.state.availableCows.length !== 0)
+        if (availCows.length !== 0)
             enableAll = 1;
-        if (this.state.selectedCows.length !== 0)
+        if (selCows.length !== 0)
             enableNone = 1;
 
         var cows = []
-        for (var i = 0; i < this.state.availableCows.length; i++) {
-            var cow = this.state.availableCows[i]
-            cows.push(cow)
+        for (var i = 0; i < availCows.length; i++) {
+            var cow = availCows[i]
+            if(String(cow).includes(val))
+                cows.push(cow)
         }
         // var sortedCows = cows.sort()
         this.setState({
@@ -99,8 +102,8 @@ export default class SelectWidget extends React.Component {
             selectedCowRows.push(<TagWidget name = {this.state.selectedCows[cow]}
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
-                                            passedKey={this.getRandomKey()} 
-                                            key={this.getRandomKey()} 
+                                            passedKey={this.getRandomKey("tagwidgetpass", cow)} 
+                                            key={this.getRandomKey("tagwidget", cow)} 
                                             onClick={(e) => this.handleSelectedCowClick(e)}/>)
             keyInc = keyInc + 1;
         }
@@ -110,11 +113,11 @@ export default class SelectWidget extends React.Component {
     displaySearchedCows() {
         var searchedCowRows = [];
         var sortedCows = [...this.state.searchedCows];
-        sortedCows.sort();
-        for (var cow in this.state.searchedCows) {
-                searchedCowRows.push(<CowSelectorRowWidget name ={this.state.searchedCows[cow]} 
-                                                            passedKey={this.getRandomKey()} 
-                                                            key={this.getRandomKey()} 
+        // sortedCows.sort();
+        for (var cow in sortedCows) {
+                searchedCowRows.push(<CowSelectorRowWidget name ={sortedCows[cow]} 
+                                                            passedKey={this.getRandomKey("cowrowpass", cow)} 
+                                                            key={this.getRandomKey("cowrow", cow)} 
                                                             handleSearchCowClick={(e) => this.handleSearchCowClick(e)}/>)
         }
         return searchedCowRows;
@@ -124,46 +127,79 @@ export default class SelectWidget extends React.Component {
         var name = e.target.innerText;
         var found = 0;
         var cowIndex = 0;
-        for (var i = 0; !found && i < this.state.availableCows.length; i++){
-            if (String(this.state.availableCows[i]) === name) {
+        var avalCows = [...this.state.availableCows];
+        for (var i = 0; !found && i < avalCows.length; i++){
+            if (avalCows[i] === parseInt(name)) {
                 found = 1;
                 cowIndex = i;
             }
         }
 
+        var srchText = [...this.state.searchText];
         var newSelectedCows = [...this.state.selectedCows];
         var newAvailableCows = [...this.state.availableCows];
         newSelectedCows.push(newAvailableCows[cowIndex]);
         newAvailableCows.splice(cowIndex, 1);
-        console.log(newSelectedCows)
-        console.log(newAvailableCows)
+
+        var enableAll = 0, enableNone = 0;
+        if (newAvailableCows.length !== 0)
+            enableAll = 1;
+        if (newSelectedCows.length !== 0)
+            enableNone = 1;
+
+        var cows = []
+        for (var ii = 0; ii < newAvailableCows.length; ii++) {
+            var cow = newAvailableCows[ii]
+            if(String(cow).includes(srchText))
+                cows.push(cow)
+        }
 
         this.setState({
             availableCows: newAvailableCows,
-            selectedCows: newSelectedCows
-        }, this.updateSelectedCows(this.state.searchText))
+            selectedCows: newSelectedCows,
+            searchedCows: cows,
+            enableSelectAll: enableAll,
+            enableSelectNone: enableNone
+        }, this.props.updateCows(newSelectedCows))
     }
     
     handleSelectedCowClick(e) {
         var name = e.target.innerText;
         var found = 0;
         var cowIndex = 0;
-        for (var i = 0; !found && i < this.state.selectedCows.length; i++){
-            if (String(this.state.selectedCows[i]) === name) {
+        var newSelectedCows = [...this.state.selectedCows]
+        for (var i = 0; !found && i < newSelectedCows.length; i++){
+            if (newSelectedCows[i] === parseInt(name)) {
                 found = 1;
                 cowIndex = i;
             }
         }
 
-        var newAvailableCows = this.state.availableCows;
-        var newSelectedCows = this.state.selectedCows;
+        var srchText = [...this.state.searchText];
+        var newAvailableCows = [...this.state.availableCows];
         newAvailableCows.push(newSelectedCows[cowIndex])
         newSelectedCows.splice(cowIndex, 1);
 
+        var enableAll = 0, enableNone = 0;
+        if (newAvailableCows.length !== 0)
+            enableAll = 1;
+        if (newSelectedCows.length !== 0)
+            enableNone = 1;
+
+        var cows = []
+        for (var ii = 0; ii < newAvailableCows.length; ii++) {
+            var cow = newAvailableCows[ii]
+            if(String(cow).includes(srchText))
+                cows.push(cow)
+        }
+
         this.setState({
             availableCows: newAvailableCows,
-            selectedCows: newSelectedCows
-        }, this.updateSelectedCows(this.state.searchText))
+            selectedCows: newSelectedCows,
+            searchedCows: cows,
+            enableSelectAll: enableAll,
+            enableSelectNone: enableNone
+        }, this.props.updateCows(newSelectedCows))
     }
 
     handleSelectAllClick(e) {
@@ -172,8 +208,11 @@ export default class SelectWidget extends React.Component {
 
         this.setState({
             availableCows: [],
+            searchedCows: [],
+            enableSelectAll: 0,
+            enableSelectNone: 1,
             selectedCows: allCows
-        }, this.updateSelectedCows(this.state.searchText))
+        })
     }
 
     handleSelectNoneClick(e) {
@@ -182,7 +221,10 @@ export default class SelectWidget extends React.Component {
 
         this.setState({
             availableCows: allCows,
-            selectedCows: []
+            selectedCows: [],
+            enableSelectAll: 1,
+            enableSelectNone: 0,
+            searchedCows: allCows
         }, this.updateSelectedCows(this.state.searchText))
     }
 
@@ -197,7 +239,6 @@ export default class SelectWidget extends React.Component {
                 </div>
             )
         }
-
         return (
             <div className="select-widget">
                 <div className="current-cows">
@@ -206,17 +247,13 @@ export default class SelectWidget extends React.Component {
                     {this.state.selectedCows.length !== 0 && 
                         <>{this.displaySelectedCows()}</>}
                 </div>
-                <div className="cow-list-widget" key={this.getRandomKey()}>
+                <div className="cow-list-widget" key={this.getRandomKey("cowlist", 0)}>
                     <div className="select-buttons">
                         <TagWidget name ={"Select all"} 
-                                            passedKey={this.getRandomKey()} 
-                                            key={this.getRandomKey()} 
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
                                             onClick={(e) => this.handleSelectAllClick(e)}/>
                         <TagWidget name ={"Select none"} 
-                                            passedKey={this.getRandomKey()} 
-                                            key={this.getRandomKey()} 
                                             enableSelectAll = {this.state.enableSelectAll}
                                             enableSelectNone = {this.state.enableSelectNone}
                                             onClick={(e) => this.handleSelectNoneClick(e)}/>
@@ -226,11 +263,11 @@ export default class SelectWidget extends React.Component {
                             placeholder="Search..." 
                             onChange={event => this.handleSearchTextChange(event)}>        
                     </input>
-                    <div className="available-cows" key={this.getRandomKey()}>
+                    <div className="available-cows" key={this.getRandomKey("availcows", 0)}>
                         {this.state.searchedCows.length === 0 && 
-                            <h4 className="no-cows-text" key={this.getRandomKey()}>No cows available</h4>}
+                            <h4 className="no-cows-text" key={this.getRandomKey("availcowsrender", 0)}>No cows available</h4>}
                         {this.state.searchedCows.length !== 0 && 
-                            <div key={this.getRandomKey()}>{this.displaySearchedCows()}</div>}
+                            <div key={this.getRandomKey("availcowsrendera", 1)}>{this.displaySearchedCows()}</div>}
                     </div>
                 </div>
             </div>

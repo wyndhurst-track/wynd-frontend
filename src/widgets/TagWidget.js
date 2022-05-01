@@ -1,31 +1,29 @@
-import React from "react";
+import React, {useMemo} from "react";
 import '../styles/widgets/TagWidget.css'
 
-export default class TagWidget extends React.Component {
-    constructor(props) {
-        super(props)
+function getStyles(props) {
+    if(props.name === "No cows selected")
+        return "tag-widget-single"
+    else if(props.name === "Please wait")
+        return "tag-widget-disabled"
+    else if (props.name === "Select all" && props.enableSelectAll === 1)
+        return "tag-widget-all"
+    else if (props.name === "Select all" && props.enableSelectAll === 0)
+        return "tag-widget-disabled"
+    else if (props.name === "Select none" && props.enableSelectNone === 1)
+        return "tag-widget-none"
+    else if (props.name === "Select none" && props.enableSelectNone === 0)
+        return "tag-widget-disabled"
+    else 
+        return "tag-widget"
+}
 
-        if(this.props.name === "No cows selected")
-            this.style = "tag-widget-single"
-        else if(this.props.name === "Please wait")
-            this.style = "tag-widget-disabled"
-        else if (this.props.name === "Select all" && this.props.enableSelectAll === 1)
-            this.style = "tag-widget-all"
-        else if (this.props.name === "Select all" && this.props.enableSelectAll === 0)
-            this.style = "tag-widget-disabled"
-        else if (this.props.name === "Select none" && this.props.enableSelectNone === 1)
-            this.style = "tag-widget-none"
-        else if (this.props.name === "Select none" && this.props.enableSelectNone === 0)
-            this.style = "tag-widget-disabled"
-        else 
-            this.style = "tag-widget"
-    }
+export default function TagWidget(props) {
+    const style = useMemo(() => getStyles(props), [props])
 
-    render() {
-        return (
-            <span className={this.style} onClick={this.props.onClick}>
-                <p className="tag-text">{this.props.name}</p>
-            </span>
-        );
-    }
+    return (
+        <span className={style} onClick={props.onClick}>
+            <p className="tag-text">{props.name}</p>
+        </span>
+    );
 }

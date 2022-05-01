@@ -1,3 +1,20 @@
+.stats-text {
+    padding: 5px 7px;
+    font-family: 'Raleway', sans-serif;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.dateSelector {
+    padding: 2px;
+    margin: 3px;
+}
+
 .stats-widget {
     grid-area: stats;
     background-color: #FFF9F3;
@@ -8,7 +25,7 @@
     transform: scale(0.997);
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: right;
     flex-flow: column;
 }
 
@@ -16,7 +33,6 @@
     width: 0;
     height: 0;
 }
-
 
 .stats-widget:hover {
     opacity: 1;
