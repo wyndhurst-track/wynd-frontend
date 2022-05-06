@@ -50,7 +50,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5000/data", head)
+        fetch("http://backend:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -71,7 +71,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5000/data", head)
+        fetch("http://backend:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -92,7 +92,7 @@ export default class Body extends React.Component {
             }
         }
 
-        fetch("http://127.0.0.1:5000/data", head)
+        fetch("http://backend:5000/data", head)
             .then(res => res.json())
             .then(
                 (result) => {

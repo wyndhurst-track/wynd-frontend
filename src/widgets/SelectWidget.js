@@ -32,7 +32,7 @@ export default class SelectWidget extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://127.0.0.1:5000/cows")
+        fetch("http://backend:5000/cows")
             .then(res => res.json())
             .then(
                 (result) => {
